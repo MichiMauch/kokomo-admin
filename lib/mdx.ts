@@ -17,7 +17,7 @@ export function createMdxContent({
     `authors: ['default']`,
     `date: '${new Date().toISOString().split("T")[0]}'`,
     `summary: '${summary}'`,
-    `draft: true`,
+    `draft: false`,
     imageUrl ? `images: https://pub-29ede69a4da644b9b81fa3dd5f8e9d6a.r2.dev/${imageUrl.split("/").pop()}` : null,
     `title: '${title}'`,
     "---",
