@@ -54,7 +54,7 @@ export default function ContentPage() {
           );
         }
 
-        // Abrufen der Inhalte aus dem GitHub-Repository
+        // Abrufen der Inhalte aus dem GitHub-Repositoryyy
         let fetchedContents = (await fetchGitHubContents()) as GitHubContent[];
         console.log("Fetched contents:", fetchedContents);
 

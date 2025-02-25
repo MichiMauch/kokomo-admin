@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import {
   fetchFileContent,
   extractFrontmatter,
@@ -18,7 +18,7 @@ interface Content {
 
 export default function EditorPage() {
   const router = useRouter();
-  const { path } = router.query;
+  const [path, setPath] = useState<string | null>(null);
   const [content, setContent] = useState<Content>({
     title: "",
     summary: "",
@@ -27,9 +27,17 @@ export default function EditorPage() {
   });
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const filePath = urlParams.get("path");
+    if (filePath) {
+      setPath(filePath);
+    }
+  }, []);
+
+  useEffect(() => {
     if (path) {
       (async () => {
-        const fileContent = await fetchFileContent(path as string);
+        const fileContent = await fetchFileContent(path);
         const frontmatter = await extractFrontmatter(fileContent);
         setContent({
           title: frontmatter.title,
