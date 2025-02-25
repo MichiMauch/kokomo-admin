@@ -25,6 +25,7 @@ export default function EditorPage() {
     markdown: "",
     tags: [],
   });
+  const [originalMarkdown, setOriginalMarkdown] = useState<string>("");
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -38,6 +39,7 @@ export default function EditorPage() {
     if (path) {
       (async () => {
         const fileContent = await fetchFileContent(path);
+        setOriginalMarkdown(fileContent); // Speichern des Originalinhalts
         const frontmatter = await extractFrontmatter(fileContent);
         setContent({
           title: frontmatter.title,
@@ -54,6 +56,12 @@ export default function EditorPage() {
   };
 
   const handleSave = async () => {
+    // Wenn keine Änderung vorgenommen wurden, führe auch keinen Commit aus.
+    if (content.markdown === originalMarkdown) {
+      alert("Es wurden keine Änderungen vorgenommen.");
+      return;
+    }
+
     await commitMdxToGithub({
       title: content.title,
       summary: content.summary,

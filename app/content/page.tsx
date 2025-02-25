@@ -1,32 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
-import {
-  checkRepoAccess,
-  fetchGitHubContents,
-  fetchFileContent,
-  extractFrontmatter,
-  GitHubContent as FetchedGitHubContent,
-} from "@/lib/github";
 import { useEffect, useState } from "react";
+import { fetchAllMdxFiles, GitHubContent } from "@/lib/github";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
-}
-
-// Typen für die GitHub API-Antwort
-interface GitHubContent {
-  name: string;
-  path: string;
-  type: "file" | "dir";
-  download_url: string | null;
-  html_url: string;
-  date?: string;
-  title?: string;
-}
-
-// Funktion zum Filtern von MDX-Dateien
-function isMdxFile(filename: string): boolean {
-  return filename.endsWith(".mdx") || filename.endsWith(".md");
 }
 
 // Funktion zum Formatieren des Datums
@@ -42,54 +20,21 @@ export default function ContentPage() {
   const router = useRouter();
   const [contents, setContents] = useState<GitHubContent[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Überprüfen des Repository-Zugriffs
-        const hasAccess = await checkRepoAccess();
-        if (!hasAccess) {
-          throw new Error(
-            "Kein Zugriff auf das Repository oder Repository existiert nicht."
-          );
-        }
-
-        // Abrufen der Inhalte aus dem GitHub-Repositoryyy
-        let fetchedContents = (await fetchGitHubContents()) as GitHubContent[];
+        // Abrufen der Inhalte aus dem GitHub-Repository
+        let fetchedContents = await fetchAllMdxFiles();
         console.log("Fetched contents:", fetchedContents);
-
-        // Filtern nach MDX-Dateien und Frontmatter extrahieren
-        fetchedContents = await Promise.all(
-          fetchedContents
-            .filter(
-              (item) =>
-                (item.type === "file" && isMdxFile(item.name)) ||
-                item.type === "dir"
-            )
-            .map(async (item) => {
-              if (item.type === "file") {
-                const content = await fetchFileContent(item.path);
-                const frontmatter: { date?: string; title: string } =
-                  await extractFrontmatter(content);
-                return {
-                  ...item,
-                  date: frontmatter.date
-                    ? formatDate(frontmatter.date)
-                    : undefined,
-                  title: frontmatter.title,
-                };
-              }
-              return item;
-            })
-        );
-        console.log("Processed contents:", fetchedContents);
 
         // Sortieren nach Datum absteigend
         fetchedContents.sort((a, b) => {
           if (a.date && b.date) {
             return (
               new Date(b.date.split(".").reverse().join("-")).getTime() -
-              new Date(a.date.split(".").reverse().join("-")).getTime()
+              new Date(a.date?.split(".").reverse().join("-") || "").getTime()
             );
           }
           return 0;
@@ -104,6 +49,8 @@ export default function ContentPage() {
             : "Ein unbekannter Fehler ist aufgetreten";
         setError(errorMessage);
         console.error("Fehler beim Abrufen der GitHub-Inhalte:", errorMessage);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -113,6 +60,10 @@ export default function ContentPage() {
   const handleEditClick = (path: string) => {
     router.push(`/editor?path=${encodeURIComponent(path)}`);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -168,7 +119,7 @@ export default function ContentPage() {
                         "whitespace-nowrap px-3 py-4 text-sm text-gray-500"
                       )}
                     >
-                      {item.date}
+                      {item.date ? formatDate(item.date) : ""}
                     </td>
                     <td
                       className={classNames(

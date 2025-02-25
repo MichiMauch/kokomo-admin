@@ -27,4 +27,3 @@ export function createMdxContent({
 
   return `${frontmatter}\n\n${markdown}`
 }
-
