@@ -12,7 +12,15 @@ body {
   input,
   select,
   textarea,
-  button {
+  button,
+  table,
+  th,
+  tr,
+  td {
     @apply border-tertiary-600;
+  }
+
+  button {
+    @apply bg-primary-300 hover:bg-primary-500  text-black hover:text-white;
   }
 }
