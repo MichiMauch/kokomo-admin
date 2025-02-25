@@ -10,9 +10,7 @@ export default function Home() {
             KOKOMO House Blogpost erstellen!
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <ImageUploadForm />
-        </CardContent>
+        <CardContent>Guten Tag</CardContent>
       </Card>
     </main>
   );
