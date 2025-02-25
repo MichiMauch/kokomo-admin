@@ -9,87 +9,50 @@ const config: Config = {
     "*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
-  	extend: {
-  		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
-  			},
-  			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
-  			},
-  			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
-  			},
-  			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
-  			},
-  			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
-  			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			},
-  			sidebar: {
-  				DEFAULT: 'hsl(var(--sidebar-background))',
-  				foreground: 'hsl(var(--sidebar-foreground))',
-  				primary: 'hsl(var(--sidebar-primary))',
-  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-  				accent: 'hsl(var(--sidebar-accent))',
-  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-  				border: 'hsl(var(--sidebar-border))',
-  				ring: 'hsl(var(--sidebar-ring))'
-  			}
-  		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		},
-  		keyframes: {
-  			'accordion-down': {
-  				from: {
-  					height: '0'
-  				},
-  				to: {
-  					height: 'var(--radix-accordion-content-height)'
-  				}
-  			},
-  			'accordion-up': {
-  				from: {
-  					height: 'var(--radix-accordion-content-height)'
-  				},
-  				to: {
-  					height: '0'
-  				}
-  			}
-  		},
-  		animation: {
-  			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
-  	}
+    extend: {
+      colors: {
+        // Hauptfarbe (Grün)
+        primary: {
+          50:  '#F5FAEA',
+          100: '#E0F2CF',
+          200: '#C3D9B0',
+          300: '#A5BF91',
+          400: '#88A671',
+          500: '#6B8C52', // Basis-Grün aus dem Bild
+          600: '#678849',
+          700: '#547A3B',
+          800: '#425C2D',
+          900: '#2F401F',
+        },
+        // Zweitfarbe (Braun/Holz)
+        secondary: {
+          50:  '#FDF8F0',
+          100: '#F5EBD4',
+          200: '#EDDBB6',
+          300: '#DFC29B',
+          400: '#D2AD88',
+          500: '#C49866', // Basis-Braun aus dem Bild
+          600: '#B08B4E',
+          700: '#9B6F3B',
+          800: '#7C5328',
+          900: '#4E3515',
+        },
+        // Dritte Farbe (Blau/Himmel)
+        tertiary: {
+          50:  '#F3FAFD',
+          100: '#E9F7FC',
+          200: '#D5EEF9',
+          300: '#B1DCF3',
+          400: '#8EC9EE',
+          500: '#6BB6E8', // Basis-Blau aus dem Bild
+          600: '#4497D4',
+          700: '#377AAB',
+          800: '#295C82',
+          900: '#1C3E59',
+        },
+		textDark: '#1F1F1F', 
+      },
+    },
   },
   plugins: [require("tailwindcss-animate")],
 };
