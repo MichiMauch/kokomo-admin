@@ -43,6 +43,10 @@ export default function LoginPage() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "100vh",
+          width: "100vw", // Hinzugefügt, um das Bild vollflächig zu machen
+          position: "absolute", // Hinzugefügt, um das Bild vollflächig zu machen
+          top: 0, // Hinzugefügt, um das Bild vollflächig zu machen
+          left: 0, // Hinzugefügt, um das Bild vollflächig zu machen
         }}
       >
         <div className="sm:mx-auto sm:w-full sm:max-w-md"></div>
